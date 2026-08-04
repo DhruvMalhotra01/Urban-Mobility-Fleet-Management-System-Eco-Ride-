@@ -10,3 +10,9 @@ class ElectricCars(Vehicles):
 
     def get_seating_capacity(self):
           print(f"Seating Capacity: {self.seating_capacity}")
+
+
+    def calculate_trip_cost(self, distance):
+        cost_per_km = 10  # Assuming a cost is 10 ruppees per kilometer
+        total_cost = distance * cost_per_km
+        return total_cost
