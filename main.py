@@ -15,16 +15,23 @@ if __name__ == "__main__" :
     # calculate the cost of the trip for ElectricScooter and ElectricCars
     # ElectricScooter: 20 km, cost per km = 5 ruppees
     EcoRideMain.greet()
-    e = ElectricScooter(
-        123,"ather",90,100
-        )
-    print(e.calculate_trip_cost(20))
 
-    # ElectricCars: 30 km, cost per km = 10 ruppees
-    c = ElectricCars(
-        1,"bmw",90,4
-        )
-    print(c.calculate_trip_cost(30))
+    ather = ElectricScooter(123,"ather",90,100)
+    ola = ElectricScooter(124,"ola",80,100)
+    car = ElectricCars(125,"bmw",90,4)
+    lst = [ather,car,ola]
+    for i in lst:
+        print(i.calculate_trip_cost(50))
+    # e = ElectricScooter(
+    #     123,"ather",90,100
+    #     )
+    # print(e.calculate_trip_cost(20))
+
+    # # ElectricCars: 30 km, cost per km = 10 ruppees
+    # c = ElectricCars(
+    #     1,"bmw",90,4
+    #     )
+    # print(c.calculate_trip_cost(30))
 
 # def main():
 #     print("Urban Mobility & Fleet Management System")

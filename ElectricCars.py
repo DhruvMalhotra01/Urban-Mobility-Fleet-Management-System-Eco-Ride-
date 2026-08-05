@@ -1,3 +1,5 @@
+from turtle import distance
+
 from Vehicle import Vehicles
 
 class ElectricCars(Vehicles):
@@ -13,6 +15,7 @@ class ElectricCars(Vehicles):
 
 
     def calculate_trip_cost(self, distance):
-        cost_per_km = 10  # Assuming a cost is 10 ruppees per kilometer
-        total_cost = distance * cost_per_km
-        return total_cost
+    
+        cost_per_km = 0.50
+        total_cost = 5 + (distance * cost_per_km)
+        return total_cost   
