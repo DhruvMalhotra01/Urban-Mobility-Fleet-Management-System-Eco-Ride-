@@ -22,6 +22,10 @@ if __name__ == "__main__" :
     hub_manager.add_vehicle("Mumbai", ola)
     hub_manager.add_vehicle("Delhi", car)
 
+    duplicate_ather = ElectricScooter(123, "another ather", 75, 90)
+    hub_manager.add_vehicle("Delhi", duplicate_ather)
+
+
     hub_manager.display_hubs()
     
 

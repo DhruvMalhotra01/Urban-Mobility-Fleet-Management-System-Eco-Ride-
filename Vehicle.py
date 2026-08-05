@@ -39,6 +39,14 @@ class Vehicles(ABC):
             self.__rental_price = price
 
 
+
+    # dunder method __eq__
+    def __eq__(self, other):
+        if isinstance(other, Vehicles):
+            return self.vehicle_id == other.vehicle_id
+        return False
+
+
     @abstractmethod
     def calculate_trip_cost(self, distance):
         pass

@@ -1,5 +1,5 @@
 from ElectricScooter    import ElectricScooter
-from ElectricCars  import ElectricCar
+from ElectricCars  import ElectricCars
 
 class Hub:
 
@@ -42,3 +42,6 @@ class Hub:
             for vehicle in vehicles:
                 print(f"Vehicle ID: {vehicle.vehicle_id}")
                 print(f"Model: {vehicle.model}")
+
+
+    
