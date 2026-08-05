@@ -1,3 +1,6 @@
+from ElectricScooter    import ElectricScooter
+from ElectricCars  import ElectricCar
+
 class Hub:
 
     def __init__(self):
@@ -14,6 +17,17 @@ class Hub:
 
         if hub_name not in self.hubs:
             self.add_hub(hub_name)
+
+        existing_vehicles = self.hubs[hub_name]
+
+        duplicates = [i for i in existing_vehicles if i == vehicle]
+
+        if duplicates:
+            print(
+                f"A vehicle with {vehicle.vehicle_id} id "
+                f"already exists in the {hub_name} hub"
+            )
+            return
 
         self.hubs[hub_name].append(vehicle)
 
