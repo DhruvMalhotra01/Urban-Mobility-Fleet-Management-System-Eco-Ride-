@@ -61,6 +61,23 @@ def demonstrate_search(hub_manager):
             f"Battery: {vehicle.get_battery_percentage()}%"
         )
 
+def demonstrate_search_by_type(hub_manager, vehicle_type):
+    """Demonstrate searching vehicles by type."""
+
+    print(f"\n=== Search by Vehicle Type: {vehicle_type.__name__} ===")
+
+    vehicles_of_type = hub_manager.search_by_type(vehicle_type)
+
+    if vehicles_of_type:
+        for vehicle in vehicles_of_type:
+            print(
+                f"Vehicle ID: {vehicle.vehicle_id}, "
+                f"Model: {vehicle.model}, "
+                f"Battery: {vehicle.get_battery_percentage()}%"
+            )
+    else:
+        print(f"No vehicles of type {vehicle_type.__name__} found.")
+
 def demonstrate_hub_management(vehicles):
     """Add vehicles to hubs and show duplicate detection."""
 
@@ -92,6 +109,9 @@ def main():
     hub_manager = demonstrate_hub_management(vehicles)
 
     demonstrate_search(hub_manager)
+
+    demonstrate_search_by_type(hub_manager, ElectricCars)
+    demonstrate_search_by_type(hub_manager, ElectricScooter)
 
 
 if __name__ == "__main__":

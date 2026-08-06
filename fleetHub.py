@@ -78,4 +78,21 @@ class Hub:
 
         return result
 
+    def search_by_type(self, vehicle_type):
+
+        all_vehicles = [
+            vehicle
+            for vehicles in self.hubs.values()
+            for vehicle in vehicles
+        ]
+
+        result = list(
+            filter(
+                lambda vehicle: isinstance(vehicle, vehicle_type),
+                all_vehicles
+            )
+        )
+
+        return result
+
     
