@@ -1,3 +1,4 @@
+from collections import defaultdict
 from ElectricScooter    import ElectricScooter
 from ElectricCars  import ElectricCars
 
@@ -78,21 +79,52 @@ class Hub:
 
         return result
 
-    def search_by_type(self, vehicle_type):
+    def search_by_type(self, vehicle_type=None):
+        
 
-        all_vehicles = [
-            vehicle
-            for vehicles in self.hubs.values()
-            for vehicle in vehicles
-        ]
+        grouped_vehicles = defaultdict(list)
 
-        result = list(
-            filter(
-                lambda vehicle: isinstance(vehicle, vehicle_type),
-                all_vehicles
-            )
-        )
+        for hub_name, vehicles in self.hubs.items():
+            for vehicle in vehicles:
+                if isinstance(vehicle, ElectricCars):
+                    grouped_vehicles['ElectricCars'].append((hub_name, vehicle))
+                elif isinstance(vehicle, ElectricScooter):
+                    grouped_vehicles['ElectricScooter'].append((hub_name, vehicle))
+                else:
+                    grouped_vehicles['Other'].append((hub_name, vehicle))
 
-        return result
+        # If caller passed a class, return list of matching vehicle objects
+        if isinstance(vehicle_type, type):
+            result = []
+            for _, vehicles in self.hubs.items():
+                for v in vehicles:
+                    if isinstance(v, vehicle_type):
+                        result.append(v)
+            if not result:
+                print(f"No vehicles of type {vehicle_type.__name__} found.")
+            return result
+
+        # If caller passed a string key, show that group
+        if vehicle_type:
+            items = grouped_vehicles.get(vehicle_type, [])
+            if not items:
+                print(f"No vehicles of type '{vehicle_type}' found.")
+                return []
+            print(f"\nVehicles of type '{vehicle_type}':")
+            for hub_name, v in items:
+                print(f"Hub: {hub_name} - ID: {v.vehicle_id}, Model: {v.model}, Battery: {v.get_battery_percentage()}%")
+            return [v for _, v in items]
+
+        # Default: print full categorized view
+        print("\n=== Vehicles grouped by type ===")
+        for k in ('ElectricCars', 'ElectricScooter', 'Other'):
+            if grouped_vehicles.get(k):
+                print(f"\n{k}:")
+                for hub_name, v in grouped_vehicles[k]:
+                    print(f"Hub: {hub_name} - ID: {v.vehicle_id}, Model: {v.model}, Battery: {v.get_battery_percentage()}%")
+
+        return grouped_vehicles
+        
+        
 
     
