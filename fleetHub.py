@@ -44,4 +44,38 @@ class Hub:
                 print(f"Model: {vehicle.model}")
 
 
+     # Search vehicles by Hub
+    def search_by_hub(self, hub_name):
+
+        if hub_name in self.hubs:
+
+            vehicles = self.hubs[hub_name]
+
+            for vehicle in vehicles:
+                print(f"Vehicle ID: {vehicle.vehicle_id}")
+                print(f"Model: {vehicle.model}")
+                print(f"Battery: {vehicle.get_battery_percentage()}%")
+
+        else:
+            print(f"Hub '{hub_name}' not found")
+
+
+    # Search vehicles with battery > 80
+    def search_by_battery(self):
+
+        all_vehicles = [
+            vehicle
+            for vehicles in self.hubs.values()
+            for vehicle in vehicles
+        ]
+
+        result = list(
+            filter(
+                lambda vehicle: vehicle.get_battery_percentage() > 80,
+                all_vehicles
+            )
+        )
+
+        return result
+
     
