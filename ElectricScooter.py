@@ -7,10 +7,10 @@ class ElectricScooter(Vehicles):
 
         super().__init__(vehicle_id = vehicle_id, model = model, battery_percentage = battery_percentage)
 
-        self.max_speed_limit = max_speed_limit
+        self.__max_speed_limit = max_speed_limit
 
     def get_max_speed_limit(self):
-        print(f"Max Speed Limit: {self.max_speed_limit} km/h")
+        print(f"Max Speed Limit: {self.__max_speed_limit} km/h")
 
     def calculate_trip_cost(self, minutes):
         cost_per_minute = 0.15  # Assuming a cost is 0.15 ruppees per minute

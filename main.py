@@ -41,6 +41,7 @@ def demonstrate_trip_costs(vehicles):
             cost = vehicle.calculate_trip_cost(20)
             distance_label = "20 minutes"
 
+
         print(f"{vehicle.model}: {distance_label} trip cost = ₹{cost:.2f}")
 
 
