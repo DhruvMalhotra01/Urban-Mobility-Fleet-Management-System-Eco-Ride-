@@ -80,11 +80,11 @@ def demonstrate_search_by_type(hub_manager, vehicle_type):
         print(f"No vehicles of type {vehicle_type.__name__} found.")
 
 
-# def demonstrate_sorting(hub_manager):
+def demonstrate_sorting(hub_manager):
 
-#     print("\n=== Alphabetical Sorting ===")
+    print("\n=== Alphabetical Sorting ===")
 
-#     hub_manager.sort_vehicles_by_model("Delhi")
+    hub_manager.sort_vehicles_by_model("Delhi")
 
 def demonstrate_hub_management(vehicles):
     """Add vehicles to hubs and show duplicate detection."""
