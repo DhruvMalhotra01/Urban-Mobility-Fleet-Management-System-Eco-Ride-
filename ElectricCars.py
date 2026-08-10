@@ -6,11 +6,12 @@ class ElectricCars(Vehicles):
     
             super().__init__(vehicle_id = vehicle_id, model = model, battery_percentage = battery_percentage)
     
+            self.__seating_capacity = seating_capacity
             self.seating_capacity = seating_capacity
     
 
     def get_seating_capacity(self):
-          print(f"Seating Capacity: {self.seating_capacity}")
+          print(f"Seating Capacity: {self.__seating_capacity}")
 
 
     def calculate_trip_cost(self, distance):

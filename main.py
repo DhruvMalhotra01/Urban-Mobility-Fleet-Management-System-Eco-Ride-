@@ -130,6 +130,22 @@ def demonstrate_advanced_sorting(hub_manager):
 
     for vehicle in vehicles:
         print(vehicle)
+
+def demonstrate_csv_persistence(hub_manager):
+
+    print("\n=== CSV Persistence ===")
+
+    # Save fleet
+    hub_manager.save_to_csv("fleet.csv")
+
+    # Create a new Hub to demonstrate loading
+    new_hub = Hub()
+
+    new_hub.load_from_csv("fleet.csv")
+
+    print("\nFleet loaded from CSV:")
+
+    new_hub.display_hubs()
 def main():
     print("Welcome to Eco-Ride Urban Mobility System")
     print("Urban Mobility & Fleet Management System")
@@ -148,6 +164,8 @@ def main():
     demonstrate_sorting(hub_manager)
     demonstrate_status_analytics(hub_manager)
     demonstrate_advanced_sorting(hub_manager)
+    demonstrate_csv_persistence(hub_manager)
+
 
 if __name__ == "__main__":
     main()

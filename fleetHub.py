@@ -1,6 +1,8 @@
 from collections import defaultdict
+from fileinput import filename
 from ElectricScooter    import ElectricScooter
 from ElectricCars  import ElectricCars
+import csv
 
 class Hub:
 
@@ -183,6 +185,100 @@ class Hub:
             key=lambda vehicle: vehicle.get_battery_percentage(),
             reverse=True
         )
+
+    def save_to_csv(self, filename="fleet.csv"):
+
+        with open(filename, "w", newline="") as file:
+
+            writer = csv.writer(file)
+
+            writer.writerow([
+                "hub_name",
+                "vehicle_type",
+                "vehicle_id",
+                "model",
+                "battery_percentage",
+                "status",
+                "rental_price",
+                "seating_capacity",
+                "max_speed_limit"
+            ])
+
+            for hub_name, vehicles in self.hubs.items():
+
+                for vehicle in vehicles:
+
+                    if isinstance(vehicle, ElectricCars):
+                        vehicle_type = "Car"
+                        seating_capacity = vehicle.seating_capacity
+                        max_speed_limit = ""
+
+                    elif isinstance(vehicle, ElectricScooter):
+                        vehicle_type = "Scooter"
+                        seating_capacity = ""
+                        max_speed_limit = vehicle.max_speed_limit
+
+                    else:
+                        vehicle_type = "Vehicle"
+                        seating_capacity = ""
+                        max_speed_limit = ""
+
+                    writer.writerow([
+                        hub_name,
+                        vehicle_type,
+                        vehicle.vehicle_id,
+                        vehicle.model,
+                        vehicle.get_battery_percentage(),
+                        vehicle.get_maintenance_status(),
+                        vehicle.get_rental_price(),
+                        seating_capacity,
+                        max_speed_limit
+                    ])
+
+        print(f"Fleet data saved to {filename}")
+
+    def load_from_csv(self, filename="fleet.csv"):
+
+        try:
+
+            with open(filename, "r", newline="") as file:
+
+                reader = csv.DictReader(file)
+
+                for row in reader:
+
+                    vehicle_type = row["vehicle_type"]
+
+                    if vehicle_type == "Car":
+
+                        vehicle = ElectricCars(
+                            row["vehicle_id"],
+                            row["model"],
+                            int(row["battery_percentage"]),
+                            int(row["seating_capacity"])
+                        )
+
+                    elif vehicle_type == "Scooter":
+
+                        vehicle = ElectricScooter(
+                            row["vehicle_id"],
+                            row["model"],
+                            int(row["battery_percentage"]),
+                            int(row["max_speed_limit"])
+                        )
+
+                    else:
+                        continue
+
+                    vehicle.set_maintenance_status(row["status"])
+                    vehicle.set_rental_price(float(row["rental_price"]))
+
+                    self.add_vehicle(row["hub_name"], vehicle)
+
+            print(f"Fleet data loaded from {filename}")
+
+        except FileNotFoundError:
+            print(f"{filename} not found. Starting with empty fleet.")
     def status_analytics(self):
 
         status_count = {

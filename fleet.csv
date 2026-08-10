@@ -1,0 +1,4 @@
+hub_name,vehicle_type,vehicle_id,model,battery_percentage,status,rental_price,seating_capacity,max_speed_limit
+Delhi,Scooter,S001,Ather 450X,95,On Trip,15000,,100
+Delhi,Car,C001,BMW i4,90,Available,0,4,
+Mumbai,Scooter,S002,Ola S1 Pro,80,Under Maintenance,0,,95

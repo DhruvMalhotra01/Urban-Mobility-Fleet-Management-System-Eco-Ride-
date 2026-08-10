@@ -8,6 +8,7 @@ class ElectricScooter(Vehicles):
         super().__init__(vehicle_id = vehicle_id, model = model, battery_percentage = battery_percentage)
 
         self.__max_speed_limit = max_speed_limit
+        self.max_speed_limit = max_speed_limit
 
     def get_max_speed_limit(self):
         print(f"Max Speed Limit: {self.__max_speed_limit} km/h")
