@@ -1,4 +1,3 @@
-from turtle import distance
 
 from Vehicle import Vehicles
 
