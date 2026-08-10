@@ -79,6 +79,13 @@ def demonstrate_search_by_type(hub_manager, vehicle_type):
     else:
         print(f"No vehicles of type {vehicle_type.__name__} found.")
 
+
+# def demonstrate_sorting(hub_manager):
+
+#     print("\n=== Alphabetical Sorting ===")
+
+#     hub_manager.sort_vehicles_by_model("Delhi")
+
 def demonstrate_hub_management(vehicles):
     """Add vehicles to hubs and show duplicate detection."""
 
@@ -93,11 +100,19 @@ def demonstrate_hub_management(vehicles):
     duplicate_ather = ElectricScooter("S001", "Ather 450X Duplicate", 75, 90)
     hub_manager.add_vehicle("Delhi", duplicate_ather)
 
+    vehicles[0].set_maintenance_status("On Trip")
+    vehicles[1].set_maintenance_status("Under Maintenance")
+    vehicles[2].set_maintenance_status("Available")
+
     hub_manager.display_hubs()
 
     return hub_manager
 
+def demonstrate_status_analytics(hub_manager):
 
+    print("\n=== Fleet Analytics ===")
+
+    hub_manager.status_analytics()
 
 def main():
     print("Welcome to Eco-Ride Urban Mobility System")
@@ -114,6 +129,8 @@ def main():
     demonstrate_search_by_type(hub_manager, ElectricCars)
     demonstrate_search_by_type(hub_manager, ElectricScooter)
 
+    demonstrate_sorting(hub_manager)
+    demonstrate_status_analytics(hub_manager)
 
 if __name__ == "__main__":
     main()

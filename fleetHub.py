@@ -124,7 +124,42 @@ class Hub:
                     print(f"Hub: {hub_name} - ID: {v.vehicle_id}, Model: {v.model}, Battery: {v.get_battery_percentage()}%")
 
         return grouped_vehicles
-        
-        
 
+    def sort_vehicles_by_model(self, hub_name):
+
+        if hub_name not in self.hubs:
+            print(f"Hub '{hub_name}' not found")
+            return
+
+        self.hubs[hub_name].sort(key=lambda vehicle: vehicle.model)
+
+        print(f"\nVehicles in {hub_name} sorted alphabetically:")
+        
+        for vehicle in self.hubs[hub_name]:
+            print(vehicle)
+
+    
+        
+        
+    def status_analytics(self):
+
+        status_count = {
+            "Available": 0,
+            "On Trip": 0,
+            "Under Maintenance": 0
+        }
+
+        for vehicles in self.hubs.values():
+            for vehicle in vehicles:
+
+                status = vehicle.get_maintenance_status()
+
+                if status in status_count:
+                    status_count[status] += 1
+
+        print("\n===== Fleet Status Analytics =====")
+
+        print(f"Available vehicles         : {status_count['Available']}")
+        print(f"On Trip vehicles           : {status_count['On Trip']}")
+        print(f"Under Maintenance vehicles : {status_count['Under Maintenance']}")
     

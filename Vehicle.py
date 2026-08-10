@@ -8,6 +8,14 @@ class Vehicles(ABC):
         self.set_battery_percentage(battery_percentage)
         self.__maintenance_status = 0# where to initialize the maintenance status??
         self.__rental_price = 0# where to initialize the rental price??
+
+    def __str__(self):
+        return (
+            f"Vehicle ID: {self.vehicle_id}, "
+            f"Model: {self.model}, "
+            f"Battery: {self.get_battery_percentage()}%, "
+            f"Status: {self.get_maintenance_status()}"
+        )
         
 
     #Getter battery
@@ -25,8 +33,13 @@ class Vehicles(ABC):
     def get_maintenance_status(self):
         return self.__maintenance_status
     #setter for maintenance
-    def set_maintenance_status(self,status):
-        self.__maintenance_status = status
+    def set_maintenance_status(self, status):
+        valid_statuses = ["Available", "On Trip", "Under Maintenance"]
+
+        if status in valid_statuses:
+            self.__maintenance_status = status
+        else:
+            print("Invalid vehicle status")
 
     #getter for Rental_Price
     def get_rental_price(self):  # function to get the rental price
