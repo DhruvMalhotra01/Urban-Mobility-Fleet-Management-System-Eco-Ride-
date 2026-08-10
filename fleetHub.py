@@ -138,9 +138,51 @@ class Hub:
         for vehicle in self.hubs[hub_name]:
             print(vehicle)
 
-    
-        
-        
+    def sort_by_battery(self, hub_name):
+
+        if hub_name not in self.hubs:
+            print(f"Hub '{hub_name}' not found")
+            return
+
+        self.hubs[hub_name].sort(
+            key=lambda vehicle: vehicle.get_battery_percentage(),
+            reverse=True
+        )
+
+        print(f"\nVehicles in {hub_name} sorted by battery:")
+
+        for vehicle in self.hubs[hub_name]:
+            print(vehicle)
+
+    def sort_by_fare(self, hub_name):
+
+        if hub_name not in self.hubs:
+            print(f"Hub '{hub_name}' not found")
+            return
+
+        self.hubs[hub_name].sort(
+            key=lambda vehicle: vehicle.get_rental_price(),
+            reverse=True
+        )
+
+        print(f"\nVehicles in {hub_name} sorted by fare:")
+
+        for vehicle in self.hubs[hub_name]:
+            print(vehicle)
+
+    def sort_fleet_by_battery(self):
+
+        all_vehicles = [
+            vehicle
+            for vehicles in self.hubs.values()
+            for vehicle in vehicles
+        ]
+
+        return sorted(
+            all_vehicles,
+            key=lambda vehicle: vehicle.get_battery_percentage(),
+            reverse=True
+        )
     def status_analytics(self):
 
         status_count = {

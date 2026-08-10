@@ -114,6 +114,22 @@ def demonstrate_status_analytics(hub_manager):
 
     hub_manager.status_analytics()
 
+def demonstrate_advanced_sorting(hub_manager):
+
+    print("\n=== Sort By Battery ===")
+    hub_manager.sort_by_battery("Delhi")
+
+    print("\n=== Sort By Fare ===")
+    hub_manager.sort_by_fare("Delhi")
+
+def demonstrate_advanced_sorting(hub_manager):
+
+    print("\n=== Fleet Sorted By Battery ===")
+
+    vehicles = hub_manager.sort_fleet_by_battery()
+
+    for vehicle in vehicles:
+        print(vehicle)
 def main():
     print("Welcome to Eco-Ride Urban Mobility System")
     print("Urban Mobility & Fleet Management System")
@@ -131,6 +147,7 @@ def main():
 
     demonstrate_sorting(hub_manager)
     demonstrate_status_analytics(hub_manager)
+    demonstrate_advanced_sorting(hub_manager)
 
 if __name__ == "__main__":
     main()
