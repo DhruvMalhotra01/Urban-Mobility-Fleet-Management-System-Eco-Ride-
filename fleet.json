@@ -1,0 +1,33 @@
+{
+    "Delhi": [
+        {
+            "vehicle_type": "Scooter",
+            "vehicle_id": "S001",
+            "model": "Ather 450X",
+            "battery_percentage": 95,
+            "status": "On Trip",
+            "rental_price": 15000,
+            "max_speed_limit": 100
+        },
+        {
+            "vehicle_type": "Car",
+            "vehicle_id": "C001",
+            "model": "BMW i4",
+            "battery_percentage": 90,
+            "status": "Available",
+            "rental_price": 0,
+            "seating_capacity": 4
+        }
+    ],
+    "Mumbai": [
+        {
+            "vehicle_type": "Scooter",
+            "vehicle_id": "S002",
+            "model": "Ola S1 Pro",
+            "battery_percentage": 80,
+            "status": "Under Maintenance",
+            "rental_price": 0,
+            "max_speed_limit": 95
+        }
+    ]
+}
