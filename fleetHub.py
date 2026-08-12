@@ -1,9 +1,8 @@
 from collections import defaultdict
-from fileinput import filename
-from ElectricScooter    import ElectricScooter
-from ElectricCars  import ElectricCars
 import csv
 import json
+from ElectricCars import ElectricCars
+from ElectricScooter import ElectricScooter
 
 class Hub:
 
@@ -51,18 +50,18 @@ class Hub:
      # Search vehicles by Hub
     def search_by_hub(self, hub_name):
 
-        if hub_name in self.hubs:
-
-            vehicles = self.hubs[hub_name]
-
-            for vehicle in vehicles:
-                print(f"Vehicle ID: {vehicle.vehicle_id}")
-                print(f"Model: {vehicle.model}")
-                print(f"Battery: {vehicle.get_battery_percentage()}%")
-
-        else:
+        if hub_name not in self.hubs:
             print(f"Hub '{hub_name}' not found")
+            return []
 
+        vehicles = self.hubs[hub_name]
+
+        for vehicle in vehicles:
+            print(f"Vehicle ID: {vehicle.vehicle_id}")
+            print(f"Model: {vehicle.model}")
+            print(f"Battery: {vehicle.get_battery_percentage()}%")
+
+        return vehicles
 
     # Search vehicles with battery > 80
     def search_by_battery(self):
@@ -238,47 +237,6 @@ class Hub:
 
         print(f"Fleet data saved to {filename}")
 
-    def save_to_json(self, filename="fleet.json"):
-
-        data = {}
-
-        for hub_name, vehicles in self.hubs.items():
-
-            data[hub_name] = []
-
-            for vehicle in vehicles:
-
-                if isinstance(vehicle, ElectricCars):
-
-                    vehicle_data = {
-                        "vehicle_type": "Car",
-                        "vehicle_id": vehicle.vehicle_id,
-                        "model": vehicle.model,
-                        "battery_percentage": vehicle.get_battery_percentage(),
-                        "status": vehicle.get_maintenance_status(),
-                        "rental_price": vehicle.get_rental_price(),
-                        "seating_capacity": vehicle.seating_capacity
-                    }
-
-                elif isinstance(vehicle, ElectricScooter):
-
-                    vehicle_data = {
-                        "vehicle_type": "Scooter",
-                        "vehicle_id": vehicle.vehicle_id,
-                        "model": vehicle.model,
-                        "battery_percentage": vehicle.get_battery_percentage(),
-                        "status": vehicle.get_maintenance_status(),
-                        "rental_price": vehicle.get_rental_price(),
-                        "max_speed_limit": vehicle.max_speed_limit
-                    }
-
-                data[hub_name].append(vehicle_data)
-
-        with open(filename, "w") as file:
-            json.dump(data, file, indent=4)
-
-        print(f"Fleet data saved to {filename}")
-
     def load_from_csv(self, filename="fleet.csv"):
 
         try:
@@ -322,41 +280,35 @@ class Hub:
         except FileNotFoundError:
             print(f"{filename} not found. Starting with empty fleet.")
 
+    def _vehicle_to_record(self, vehicle):
+        vehicle_data = {
+            "vehicle_id": vehicle.vehicle_id,
+            "model": vehicle.model,
+            "battery_percentage": vehicle.get_battery_percentage(),
+            "status": vehicle.get_maintenance_status(),
+            "rental_price": vehicle.get_rental_price(),
+        }
+
+        if isinstance(vehicle, ElectricCars):
+            vehicle_data["vehicle_type"] = "Car"
+            vehicle_data["seating_capacity"] = vehicle.seating_capacity
+        elif isinstance(vehicle, ElectricScooter):
+            vehicle_data["vehicle_type"] = "Scooter"
+            vehicle_data["max_speed_limit"] = vehicle.max_speed_limit
+        else:
+            vehicle_data["vehicle_type"] = "Vehicle"
+
+        return vehicle_data
+
     def save_to_json(self, filename="fleet.json"):
 
         data = {}
 
         for hub_name, vehicles in self.hubs.items():
-
-            data[hub_name] = []
-
-            for vehicle in vehicles:
-
-                if isinstance(vehicle, ElectricCars):
-
-                    vehicle_data = {
-                        "vehicle_type": "Car",
-                        "vehicle_id": vehicle.vehicle_id,
-                        "model": vehicle.model,
-                        "battery_percentage": vehicle.get_battery_percentage(),
-                        "status": vehicle.get_maintenance_status(),
-                        "rental_price": vehicle.get_rental_price(),
-                        "seating_capacity": vehicle.seating_capacity
-                    }
-
-                elif isinstance(vehicle, ElectricScooter):
-
-                    vehicle_data = {
-                        "vehicle_type": "Scooter",
-                        "vehicle_id": vehicle.vehicle_id,
-                        "model": vehicle.model,
-                        "battery_percentage": vehicle.get_battery_percentage(),
-                        "status": vehicle.get_maintenance_status(),
-                        "rental_price": vehicle.get_rental_price(),
-                        "max_speed_limit": vehicle.max_speed_limit
-                    }
-
-                data[hub_name].append(vehicle_data)
+            data[hub_name] = [
+                self._vehicle_to_record(vehicle)
+                for vehicle in vehicles
+            ]
 
         with open(filename, "w") as file:
             json.dump(data, file, indent=4)
@@ -413,6 +365,7 @@ class Hub:
 
         except FileNotFoundError:
             print(f"{filename} not found.")
+
     def status_analytics(self):
 
         status_count = {
@@ -434,4 +387,6 @@ class Hub:
         print(f"Available vehicles         : {status_count['Available']}")
         print(f"On Trip vehicles           : {status_count['On Trip']}")
         print(f"Under Maintenance vehicles : {status_count['Under Maintenance']}")
+
+        return status_count
     

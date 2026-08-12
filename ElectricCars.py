@@ -1,21 +1,18 @@
 
 from Vehicle import Vehicles
 
+
 class ElectricCars(Vehicles):
+    BASE_FARE = 5
+    COST_PER_KM = 0.50
+
     def __init__(self, vehicle_id, model, battery_percentage, seating_capacity):
-    
-            super().__init__(vehicle_id = vehicle_id, model = model, battery_percentage = battery_percentage)
-    
-            self.__seating_capacity = seating_capacity
-            self.seating_capacity = seating_capacity
-    
+        super().__init__(vehicle_id, model, battery_percentage)
+        self.__seating_capacity = seating_capacity
+        self.seating_capacity = seating_capacity
 
     def get_seating_capacity(self):
-          print(f"Seating Capacity: {self.__seating_capacity}")
-
+        return self.__seating_capacity
 
     def calculate_trip_cost(self, distance):
-    
-        cost_per_km = 0.50
-        total_cost = 5 + (distance * cost_per_km)
-        return total_cost   
+        return self.BASE_FARE + distance * self.COST_PER_KM
